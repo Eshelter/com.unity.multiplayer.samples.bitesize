@@ -5,6 +5,7 @@ using Unity.Multiplayer;
 using Unity.Multiplayer.Editor;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEditor.Build.Profile;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
@@ -132,7 +133,7 @@ namespace Unity.DedicatedGameServerSample.Editor
         {
             Debug.Log($"Building {target} server");
             EditorUserBuildSettings.SwitchActiveBuildTarget(NamedBuildTarget.Server, BuildTarget.StandaloneLinux64);
-            EditorMultiplayerRolesManager.SetMultiplayerRoleForBuildTarget(NamedBuildTarget.Server, MultiplayerRoleFlags.Server);
+            EditorMultiplayerRolesManager.SetMultiplayerRoleForBuildProfile(BuildProfile.GetActiveBuildProfile(), MultiplayerRoleFlags.Server);
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = GetScenePaths(),
@@ -151,7 +152,7 @@ namespace Unity.DedicatedGameServerSample.Editor
             Debug.Log($"Building {target} client");
             
             EditorUserBuildSettings.SwitchActiveBuildTarget(NamedBuildTarget.Standalone, target);
-            EditorMultiplayerRolesManager.SetMultiplayerRoleForBuildTarget(NamedBuildTarget.Standalone, MultiplayerRoleFlags.Client);
+            EditorMultiplayerRolesManager.SetMultiplayerRoleForBuildProfile(BuildProfile.GetActiveBuildProfile(), MultiplayerRoleFlags.Client);
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = GetScenePaths(),
